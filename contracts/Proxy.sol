@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 import "./Storage.sol";
 
@@ -13,11 +13,11 @@ contract Proxy{
     }
 
     fallback () external {
-
+        _forwardCall();
     }
 
     receive() external payable {
-        
+        _forwardCall();
     }
 
     function _forwardCall() private {
@@ -42,6 +42,7 @@ contract Proxy{
             //if the forwardedcall succeeded, return the return data
             default {return(ptr, size)}
         }
+
     }
 
 }
