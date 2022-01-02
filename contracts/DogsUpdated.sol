@@ -9,9 +9,14 @@ contract DogsUpdated is Storage {
     }
 
     constructor(){
-        owner = msg.sender;
+        initialize(msg.sender);
     }
 
+    function initialize(address _owner) public{
+        require(!_initialized);
+        owner = _owner;
+        _initialized= true;
+    }
     function getNumberOfDogs() public view returns (uint){
         return uintStorage["Dogs"];
     }

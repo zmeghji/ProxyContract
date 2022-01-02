@@ -26,10 +26,18 @@ module.exports = async function (deployer, network, accounts) {
     //change proxy to use upgraded dogs contract
     proxy.upgrade(dogsUpdated.address);
 
+    //
+    proxyDog = await DogsUpdated.at(proxy.address)
+    proxyDog.initialize((accounts[0]));
+
     //verify that the storage has the same value for dogs
-    var numberOfDogs = await proxyDog.getNumberOfDogs();
+    numberOfDogs = await proxyDog.getNumberOfDogs();
     console.log("number of dogs: "+ numberOfDogs)
 
     await proxyDog.setNumberOfDogs(5);
+
+    //verify that the number of dogs has changed
+    numberOfDogs = await proxyDog.getNumberOfDogs();
+    console.log("number of dogs: "+ numberOfDogs)
 
 };
